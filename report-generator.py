@@ -11,11 +11,14 @@ def csv_2_dicts(csv_file):
     dicts = [{key: value for key, value in row.items()} for row in csv.DictReader(f, skipinitialspace=True)]
   return dicts  
 
-def report_builder(filename, names, head_count, incs):
+def report_builder(filename, names, head_count_file, incs):
   my_ip = urllib.request.urlopen("https://api.ipify.org/").read().decode('utf8')
   with open(filename, 'w') as f:
     f.write("Report Creted On " + datetime.now().strftime("%m/%d/%Y") + " from " + str(my_ip) + "\n\n")
-    f.write("Total number of employees: " + str(head_count) + "\n\n") 
+    # Demonstrating how to read a file:
+    with open (head_count_file, 'r') as f2:
+      headcount_text = f2.read()
+    f.write(headcount_text + "\n")
     f.write("Company names that contain the word Inc:" + "\n")
     for name in sorted(incs):
       f.write("* " + name + "\n")   
@@ -46,7 +49,7 @@ def main():
     for name in incs:
       f.write(name + "\n")
   
-  report_builder("/tmp/final-report.txt", company_names, head_count, incs)
+  report_builder("/tmp/final-report.txt", company_names, "/tmp/employee_count.txt", incs)
 
 if __name__ == "__main__":
   main()
