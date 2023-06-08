@@ -11,6 +11,7 @@ COPY report-generator.py ./report-generator
 RUN chown mytest report-generator
 RUN chmod 755 report-generator
 
+# make it look exactly like the example provided:
 RUN mkdir /app
 WORKDIR /app
 CMD sleep inf
